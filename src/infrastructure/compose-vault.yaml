@@ -1,8 +1,6 @@
 volumes:
   postgres_data:
     driver: local
-  vault_data:
-    driver: local
 
 services:
   vault-db:
@@ -37,12 +35,12 @@ services:
     environment:
       VAULT_LOCAL_CONFIG: >
         ui = true
-        api_addr = "http://127.0.0.1:8200"
+        api_addr = "http://0.0.0.0:8200"
         cluster_name = "dev-vault-cls"
         disable_clustering = false
 
         listener "tcp" {
-          address = "127.0.0.1:8200"
+          address = "0.0.0.0:8200"
           tls_disable = "true"
         }
 
