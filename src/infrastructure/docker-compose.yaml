@@ -1,8 +1,6 @@
 volumes:
   postgres_data:
     driver: local
-  vault_data:
-    driver: local
 
 services:
   vault-db:
@@ -37,12 +35,12 @@ services:
     environment:
       VAULT_LOCAL_CONFIG: >
         ui = true
-        api_addr = "http://127.0.0.1:8200"
+        api_addr = "http://0.0.0.0:8200"
         cluster_name = "dev-vault-cls"
         disable_clustering = false
 
         listener "tcp" {
-          address = "127.0.0.1:8200"
+          address = "0.0.0.0:8200"
           tls_disable = "true"
         }
 
@@ -52,6 +50,21 @@ services:
           ha_enabled = true
           ha_table = "vault_ha_locks"
         }
+
+  vault-proxy:
+    image: nginx:stable-alpine-perl
+    container_name: vault-proxy
+    depends_on:
+      - vault
+    restart: on-failure:10
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - vault_frontend
+    volumes:
+      - ./configuration/vault-nginx.conf:/etc/nginx/conf.d/vault-nginx.conf
+      - ./configuration/certs:/etc/nginx/certs
 
 networks:
   vault_network:
