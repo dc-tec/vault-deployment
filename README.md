@@ -18,9 +18,12 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./vault.key -out ./v
 
 In order to provide connection details for the database. I use [direnv](https://github.com/direnv/direnv) to auto-load environment variables.
 
-The following variables are used: - POSTGRES_USER=${PGUSER}
-    - POSTGRES_PASSWORD=${PGPASSWORD} - POSTGRES_DB=${PGDATABASE}
-    - POSTGRES_URL=${PGURL}
+The following variables are used:
+
+- POSTGRES_USER=${PGUSER}
+- POSTGRES_PASSWORD=${PGPASSWORD}
+- POSTGRES_DB=${PGDATABASE}
+- POSTGRES_URL=${PGURL}
 
 Next you should be able to start the stack using the following command:
 
