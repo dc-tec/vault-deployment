@@ -1,34 +1,59 @@
-# Manage namespaces
-path "sys/namespaces/*" {
-   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+# Read system health check
+path "sys/health"
+{
+  capabilities = ["read", "sudo"]
 }
 
-# Manage policies
-path "sys/policies/acl/*" {
-   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+# Create and manage ACL policies broadly across Vault
+
+# List existing policies
+path "sys/policies/acl"
+{
+  capabilities = ["list"]
 }
 
-# List policies
-path "sys/policies/acl" {
-   capabilities = ["list"]
+# Create and manage ACL policies
+path "sys/policies/acl/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-# Enable and manage secrets engines
-path "sys/mounts/*" {
-   capabilities = ["create", "read", "update", "delete", "list"]
+# Enable and manage authentication methods broadly across Vault
+
+# Manage auth methods broadly across Vault
+path "auth/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-# List available secrets engines
-path "sys/mounts" {
-  capabilities = [ "read" ]
+# Create, update, and delete auth methods
+path "sys/auth/*"
+{
+  capabilities = ["create", "update", "delete", "sudo"]
 }
 
-# Create and manage entities and groups
-path "identity/*" {
-   capabilities = ["create", "read", "update", "delete", "list"]
+# List auth methods
+path "sys/auth"
+{
+  capabilities = ["read"]
 }
 
-# Manage tokens
-path "auth/token/*" {
-   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+# Enable and manage the key/value secrets engine at `secret/` path
+
+# List, create, update, and delete key/value secrets
+path "secret/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# Manage secrets engines
+path "sys/mounts/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# List existing secrets engines.
+path "sys/mounts"
+{
+  capabilities = ["read"]
 }
